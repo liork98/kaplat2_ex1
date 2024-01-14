@@ -171,8 +171,6 @@ todos.forEach((todo, index) => {
 });
 
 
-
-
 // Start the server
 const port = 9285; // You can use any valid port number
 app.listen(port, () => {

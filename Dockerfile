@@ -3,5 +3,5 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 9285
+EXPOSE 3769
 CMD ["node", "ex3.js"]

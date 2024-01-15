@@ -91,26 +91,23 @@ app.get('/todo/content', (req, res) => {
   if (sortBy && !validSortBy.includes(sortBy)) {
     return res.status(400).json({ error: 'Invalid sortBy parameter' });
   }
-
+//return todos.filter(todo => todo.title.includes(title));
   // Filter TODOs by status
   const filteredTodos = status === 'ALL' ? todos : todos.filter(todo => todo.status === status);
-
+  let ress;
   // Sort TODOs by sortBy parameter or by ID if sortBy is not provided
-  const sortedTodos = sortBy
-    ? filteredTodos.sort((a, b) => a[sortBy] - b[sortBy])
-    : filteredTodos.sort((a, b) => a.id - b.id);
+  if (sortBy === 'TITLE') {
+    ress = filteredTodos.sort((a, b) => a.title.localeCompare(b.title))
+  }
+  else if (sortBy === 'DUE_DATE') {
+    ress = filteredTodos.sort((a,b) => a.dueDate - b.dueDate)
+  }
+  else {
+    ress = filteredTodos.sort((a,b) => a.id - b.id)
+  }
 
-  // Map TODOs to an array of objects with only the required fields
-  const todoObjects = sortedTodos.map(({ id, title, content, status, dueDate }) => ({
-    id,
-    title,
-    content,
-    status,
-    dueDate,
-  }));
-
-  // Send the response with the array of TODO objects
-  res.status(200).json(todoObjects);
+// Send the response with the array of TODO objects
+  res.status(200).json(ress);
 });
 
 // *** Question5 *** //
